@@ -16,11 +16,10 @@ https://console.developers.google.com/
 * Set up a new project here
 * Download Google App Engine Launcher - you can test locally and deploy remotely
 * You can check out your Entities in Google Developers Console by going to Hamburger > Datastore > Entities 
-![Google Developers Console](scoreboard.jpg)
-* Remember to "Create Entity" according to what information you may want to store
-
-* How you want to style the scores depends on your client side - in my case, the flash game:
 ![game screenshot](GAE_entities.jpg)
+* Remember to "Create Entity" according to what information you may want to store
+* How you want to style the scores depends on your client side - in my case, the flash game:
+![Google Developers Console](scoreboard.jpg)
 
 
 ## Resources:
