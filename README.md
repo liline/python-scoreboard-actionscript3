@@ -11,6 +11,7 @@ This project contains two parts - the back end in python, and the front end, in 
 
 ## Steps:
 https://appengine.google.com/
+
 https://console.developers.google.com/
 * Set up a new project here
 * Download Google App Engine Launcher - you can test locally and deploy remotely
@@ -26,4 +27,4 @@ https://console.developers.google.com/
 Thanks to these couple of resources:
 
 * GAE basics: http://juliobortolon.blogspot.ca/2012/02/how-to-make-high-scores-board-to-your.html
-* [Chris]https://github.com/Hawk777 for an intro to MD5 and HMAC!
+* [Chris](https://github.com/Hawk777) for an intro to MD5 and HMAC!
