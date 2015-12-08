@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE cross-domain-policy SYSTEM "http://www.adobe.com/xml/dtds/cross-domain-policy.dtd">
+<cross-domain-policy>
+
+<!-- Read this: www.adobe.com/devnet/articles/crossdomain_policy_file_spec.html -->
+
+<!-- Most restrictive policy: -->
+<!--
+<site-control permitted-cross-domain-policies="master"/> 
+<allow-access-from domain="*.deviantart.com" to-ports="*" />
+<allow-access-from domain="*.deviantart.net" to-ports="*" />
+<allow-http-request-headers-from domain="*.deviantart.com" headers="*" secure="false"/>
+-->
+
+<!-- Least restrictive policy: -->
+<!-- Liline: Since I'm building a flash game, it will be downloaded on the client side so I need to enable least restrictive policy. I have covered the security of the scores by using a method similar to HMAC to prevent users from submitting their own scores -->
+    <site-control permitted-cross-domain-policies="all"/>
+    <allow-access-from domain="*" to-ports="*" secure="false"/>
+    <allow-http-request-headers-from domain="*" headers="*" secure="false"/>
+
+</cross-domain-policy>

@@ -1,0 +1,108 @@
+package
+{
+    import flash.display.Sprite;
+    import flash.events.*;
+    import flash.net.*;
+    import flash.net.URLVariables;
+    import flash.text.TextField
+    import com.adobe.crypto.MD5;
+
+    public class TopScore extends Sprite
+    {
+        var loader:URLLoader = null;
+        var userName:String = "";
+        var achievedscore:int = 0;
+        var textfield:TextField;
+        var salt:String = "first salt";
+        var salt2:String = "second salt"
+
+        public function TopScore(helloName:String, score:int, textfield:TextField)
+        {
+            this.textfield=textfield;
+            loader = new URLLoader();
+
+            //No WhiteSpace
+            var rex:RegExp = new RegExp(/[^a-zA-Z 0-9]+/g) ;
+            helloName = helloName.replace(rex,'');
+
+            userName = helloName;
+            achievedscore = score;
+            configureListeners(loader);
+        }
+
+        public function run()
+        {
+            // Liline: For production it would be your GAE URL http://python-scoreboard.appspot.com/");
+            var request:URLRequest = new URLRequest("http://localhost:8080/");
+            trace(request);
+
+            try
+            {
+                var variables:URLVariables = new URLVariables();
+                variables.score = achievedscore;
+                // no longer than 32 characters
+                variables.name = userName;
+
+                var firsthash:String = MD5.hash(salt +variables.score + variables.name);
+                var secondhash:String = MD5.hash(salt2 + firsthash);
+                var scoreHash:String = secondhash;
+                variables.scoreHash = scoreHash;
+
+                trace("*** SCORE salt, score, name: " + salt + " " + variables.score + " " +  variables.name);
+                trace("*** first hash: " + firsthash + " secondhash: " + secondhash);
+
+                request.data = variables;
+                request.method = URLRequestMethod.POST;
+                loader.dataFormat = URLLoaderDataFormat.TEXT;
+
+                loader.load(request);
+
+            }
+            catch (error:Error)
+            {
+                textfield.text = "The score board server is down" + error;
+            }
+        }
+
+        private function configureListeners(dispatcher:IEventDispatcher):void
+        {
+            dispatcher.addEventListener(Event.COMPLETE, completeHandler);
+            dispatcher.addEventListener(Event.OPEN, openHandler);
+            dispatcher.addEventListener(ProgressEvent.PROGRESS, progressHandler);
+            dispatcher.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+            dispatcher.addEventListener(HTTPStatusEvent.HTTP_STATUS, httpStatusHandler);
+            dispatcher.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+        }
+
+        private function completeHandler(event:Event):void
+        {
+            var loader:URLLoader = URLLoader(event.target);
+            textfield.text = loader.data;
+        }
+
+        private function openHandler(event:Event):void
+        {
+            textfield.appendText("The score board server is down" + event);
+        }
+
+        private function progressHandler(event:ProgressEvent):void
+        {
+            textfield.appendText("The score board server is down" + event);
+        }
+
+        private function securityErrorHandler(event:SecurityErrorEvent):void
+        {
+            textfield.appendText("The score board server is down" + event);
+        }
+
+        private function httpStatusHandler(event:HTTPStatusEvent):void
+        {
+            textfield.appendText("The score board server is down" + event);
+        }
+
+        private function ioErrorHandler(event:IOErrorEvent):void
+        {
+            textfield.appendText("The score board server is down" + event);
+        }
+    }
+}
